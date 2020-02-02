@@ -1069,6 +1069,7 @@ start_subserver (long server_num, long seed)
 #if ERQ_DEBUG > 3
             fprintf(stderr, "%s: ERQ_LOOKUP '%s'\n", time_stamp(), buf);
 #endif
+	    printf("ERQ calling gethostbyname\n");
             hp = gethostbyname(buf);
             if (!hp && h_errno == TRY_AGAIN)
             {

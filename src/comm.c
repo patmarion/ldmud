@@ -991,7 +991,8 @@ initialize_host_ip_number (const char *hname, const char * haddr)
             exit(1);
         }
     }
-
+    printf("got hostname: %s\n", host_name);
+    
     /* Get the host address */
     memset(&host_ip_addr_template, 0, sizeof host_ip_addr_template);
     if (haddr != NULL)
@@ -1011,9 +1012,11 @@ initialize_host_ip_number (const char *hname, const char * haddr)
     }
     else
     {
+      printf("HERE getting host addr\n");
         struct hostent *hp;
 
         hp = gethostbyname(host_name);
+	printf("ok\n");
         if (!hp) {
             fprintf(stderr, "%s gethostbyname: unknown host '%s'.\n"
                           , time_stamp(), host_name);
@@ -1032,14 +1035,14 @@ initialize_host_ip_number (const char *hname, const char * haddr)
         host_ip_addr_template.sin_addr = in6addr_any;
         host_ip_addr_template.sin_family = AF_INET6;
 #endif
-
+	printf("and here\n");
         /* Find the domain part of the hostname */
         if (hname == NULL)
             domain = strchr(hp->h_name, '.');
         else
             domain = strchr(host_name, '.');
     }
-
+    printf("got it\n");
 #ifndef USE_IPV6
     printf("%s Hostname '%s' address '%s'\n"
           , time_stamp(), host_name, inet_ntoa(host_ip_number));

@@ -369,6 +369,8 @@ main (int argc, char **argv)
 #endif
     }
 
+    printf("master name: %s\n", master_name);
+    
     /* Make sure the name of the master object is sensible.
      * This is important for modules like the lexer which
      * use it directly.
@@ -448,13 +450,19 @@ main (int argc, char **argv)
         erq_file = tmp;
     }
 
+    printf("erq_file: %s\n", erq_file);
+
     if (!no_erq_demon)
         start_erq_demon("");
+    printf("HERE\n");
 #endif /* ERQ_DEMON */
+    printf("hostname: %s  addr: %s\n", hostname, hostaddr);
+    
     initialize_host_ip_number(hostname, hostaddr);
     free(hostname); hostname = NULL;
     free(hostaddr); hostaddr = NULL;
-
+    printf("initialize_host done\n");
+    
     (void)signal(SIGFPE, SIG_IGN);
     current_object = &dummy_current_object_for_loads;
     if (setjmp(toplevel_context.con.text)) {
@@ -473,7 +481,7 @@ main (int argc, char **argv)
               , time_stamp(), master_name);
         exit(1);
     }
-
+    printf("HERE1\n");
     /* Make sure master_ob is never made a dangling pointer.
      * Look at apply_master_ob() for more details.
      */
@@ -482,7 +490,8 @@ main (int argc, char **argv)
     push_number(0);
     callback_master(STR_INAUGURATE, 1);
     setup_print_block_dispatcher();
-
+    printf("HERE2\n");
+    
     /* Evaluate all the 'f' arguments we received, if any. */
     while (f_head != NULL)
     {
